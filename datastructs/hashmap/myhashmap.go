@@ -32,9 +32,24 @@ func (m myHashMap) Set(key, value string) {
 
 	if m[myKey] == nil {
 		m[myKey] = list.New()
-		m[myKey].InsertAfter(node, m[myKey].Back())
+		m[myKey].Front().Value = node
 	} else {
-		m[myKey].InsertAfter(node, m[myKey].Back())
+
+		front := m[myKey].Front()
+		set := false
+
+		for i := 0; i < m[myKey].Len(); i++ {
+			element := front.Value.(*myNode)
+			if element.key == key {
+				element.value = value
+				set = true
+				break
+			}
+			front = front.Next()
+		}
+		if !set {
+			m[myKey].InsertAfter(node, m[myKey].Back())
+		}
 	}
 }
 
