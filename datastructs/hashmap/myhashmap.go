@@ -32,23 +32,22 @@ func (m myHashMap) Set(key, value string) {
 
 	if m[myKey] == nil {
 		m[myKey] = list.New()
-		m[myKey].Front().Value = node
+		m[myKey].PushBack(node)
 	} else {
-
 		front := m[myKey].Front()
 		set := false
 
 		for i := 0; i < m[myKey].Len(); i++ {
-			element := front.Value.(*myNode)
+			element := front.Value.(myNode)
 			if element.key == key {
-				element.value = value
+				front.Value = node
 				set = true
 				break
 			}
 			front = front.Next()
 		}
 		if !set {
-			m[myKey].InsertAfter(node, m[myKey].Back())
+			m[myKey].PushBack(node)
 		}
 	}
 }
@@ -64,8 +63,6 @@ func (m myHashMap) Get(key string) interface{} {
 
 	if myList.Len() == 0 {
 		return nil
-	} else if myList.Len() == 1 {
-		return myList.Front().Value
 	}
 
 	front := myList.Front()
