@@ -1,6 +1,7 @@
 package questions
 
 import (
+	"fmt"
 	"math"
 	"strings"
 )
@@ -127,4 +128,32 @@ func oneAway(input, output string) bool {
 	}
 
 	return true
+}
+
+func stringCompression(input string) string {
+	charCountMatrix := [][]byte{}
+
+	currentChar := input[0]
+	charCount := 1
+
+	for _, char := range input[1:] {
+		if char != rune(currentChar) {
+			charCountMatrix = append(charCountMatrix, []byte{currentChar, byte(charCount)})
+			currentChar = byte(char)
+			charCount = 1
+		} else {
+			charCount++
+		}
+	}
+
+	charCountMatrix = append(charCountMatrix, []byte{currentChar, byte(charCount)})
+
+	var stringBuilder strings.Builder
+
+	for _, charCount := range charCountMatrix {
+		stringBuilder.WriteByte(charCount[0])
+		stringBuilder.WriteString(fmt.Sprintf("%d", charCount[1]))
+	}
+
+	return stringBuilder.String()
 }

@@ -199,3 +199,29 @@ func Test_oneAway(t *testing.T) {
 		})
 	}
 }
+
+func Test_stringCompression(t *testing.T) {
+	type args struct {
+		input string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "book exaple",
+			args: args{
+				input: "aabcccccaaa",
+			},
+			want: "a2b1c5a3",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := stringCompression(tt.args.input); got != tt.want {
+				t.Errorf("stringCompression() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
